@@ -58,14 +58,14 @@ func (i internet) Email() string {
 	if strings.Contains(email, "domainName") {
 		email = strings.ReplaceAll(email, "{{domainName}}", i.DomainName())
 	}
-	if strings.Contains(email, "FreeEmailDomains") {
-		email = strings.ReplaceAll(email, "{{FreeEmailDomains}}", random.FromSliceOfString(i.Provider.FreeEmailDomains()))
+	if strings.Contains(email, "freeEmailDomain") {
+		email = strings.ReplaceAll(email, "{{freeEmailDomain}}", random.FromSliceOfString(i.Provider.FreeEmailDomains()))
 	}
-	if strings.Contains(email, "SafeEmailDomains") {
-		email = strings.ReplaceAll(email, "{{SafeEmailDomains}}", random.FromSliceOfString(i.Provider.SafeEmailDomains()))
+	if strings.Contains(email, "safeEmailDomain") {
+		email = strings.ReplaceAll(email, "{{safeEmailDomain}}", random.FromSliceOfString(i.Provider.SafeEmailDomains()))
 	}
 
-	return strings.ToLower(email)
+	return strings.ToLower(i.toAscii(email))
 }
 
 //SafeEmail returns a random email address from a safe domain

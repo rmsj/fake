@@ -11,6 +11,7 @@ development, stress-test persistence layer, etc. So this Faker is heavily based 
 
 - [Installation](#installation)
 - [Basic Usage](#basic-usage)
+- [Data Factory](#data-factory)
 - [Adding Providers](#adding-providers)
 - [It's a WIP](#work-in-progress)
 
@@ -61,12 +62,64 @@ func main() {
 }
 ```
 
+## Data Factory
+
+To create multiple data fo fill in databases for development for example, you can use the `Factory` function.
+The `Factory` function requires a specific function type (`type Builder func() interface{}`) and an `int` as second parameter -
+being the amount of types the operation should be repeated.
+
+```go
+package main
+
+import (
+	"fmt"
+	"github.com/rmsj/faker"
+	"github.com/rmsj/faker/provider"
+)
+
+type user struct {
+	firstName string
+	lastName string
+	email string
+}
+
+func main() {
+	pp := provider.NewEnglishPersonProvider()
+	ip := provider.NewEnglishInternetProvider()
+
+	f, err := faker.New(pp, ip)
+	if err != nil {
+		panic(err)
+	}
+
+	builder := func() interface{} {
+		return user{
+			firstName: f.FirstName(),
+			lastName: f.LastName(),
+			email: f.Email(),
+		}
+	}
+
+	users := f.Factory(builder, 10)
+	for _, v := range users {
+		u, ok := v.(user)
+		if !ok {
+			panic("this should not happen")
+		}
+
+		// you can use the user value as normal
+		fmt.Println(u.firstName)
+		fmt.Println(u.email)
+	}
+}
+```
+
 ## Adding Providers
 
 The number of providers will grow over time and the idea is that you can change a specific `faker` provider by implementing 
 the required interface with a different set of data - to have more control, change language, etc.
 
-So you could implement the `PersonProvider` interface to have `portuguese` names, for example, and the basic example above 
+So you could implement the `PersonProvider` interface to have `portuguese` names, for example, and the [basic usabe](#basic-usage) example above 
 would look like:
 
 ```go
