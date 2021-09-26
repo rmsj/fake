@@ -15,6 +15,7 @@ func TestNew(t *testing.T) {
 		panic(err)
 	}
 
+	// just messing around
 	t.Log(f.FirstName())
 	t.Log(f.Email())
 	t.Log(f.CompanyEmail())
