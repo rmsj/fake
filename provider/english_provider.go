@@ -1,22 +1,33 @@
-package english
+package provider
 
 const (
 	genderMale   = "male"
 	genderFemale = "female"
 )
 
-// PersonProvider provides data for english language for name, surname, etc.
-type PersonProvider struct{}
+// EnglishPersonProvider provides data for english language for name, surname, etc.
+type EnglishPersonProvider struct {
+	lang    string
+	country string
+}
 
-func (p PersonProvider) titlesMale() []string {
+// NewEnglishPersonProvider builds an EnglishPersonProvider and returns it
+func NewEnglishPersonProvider() EnglishPersonProvider {
+	return EnglishPersonProvider{
+		lang:    "en",
+		country: "us",
+	}
+}
+
+func (p EnglishPersonProvider) TitlesMale() []string {
 	return []string{"Mr.", "Dr.", "Prof.", "Lord", "King", "Prince"}
 }
 
-func (p PersonProvider) titlesFemale() []string {
+func (p EnglishPersonProvider) TitlesFemale() []string {
 	return []string{"Mrs.", "Ms.", "Miss", "Dr.", "Prof.", "Lady", "Queen", "Princess"}
 }
 
-func (p PersonProvider) firstNamesMale() []string {
+func (p EnglishPersonProvider) FirstNamesMale() []string {
 	return []string{
 		"Aaron", "Abdiel", "Abdul", "Abdullah", "Abe", "Abel", "Abelardo", "Abner", "Abraham", "Adalberto", "Adam", "Adan",
 		"Adelbert", "Adolfo", "Adolph", "Adolphus", "Adonis", "Adrain", "Adrian", "Adriel", "Adrien", "Afton", "Agustin",
@@ -155,7 +166,7 @@ func (p PersonProvider) firstNamesMale() []string {
 	}
 }
 
-func (p PersonProvider) firstNamesFemale() []string {
+func (p EnglishPersonProvider) FirstNamesFemale() []string {
 	return []string{
 		"Aaliyah", "Abagail", "Abbey", "Abbie", "Abbigail", "Abby", "Abigail", "Abigale", "Abigayle", "Ada", "Adah", "Adaline", "Addie", "Addison", "Adela", "Adele", "Adelia", "Adeline", "Adell", "Adella", "Adelle", "Aditya", "Adriana", "Adrianna", "Adrienne", "Aglae", "Agnes", "Agustina", "Aida", "Aileen", "Aimee", "Aisha", "Aiyana", "Alaina", "Alana", "Alanis", "Alanna", "Alayna", "Alba", "Alberta", "Albertha", "Albina", "Alda", "Aleen", "Alejandra", "Alena", "Alene", "Alessandra", "Alessia", "Aletha", "Alexa", "Alexandra", "Alexandrea", "Alexandria", "Alexandrine", "Alexane", "Alexanne", "Alfreda", "Alia", "Alice", "Alicia", "Alisa", "Alisha", "Alison", "Alivia", "Aliya", "Aliyah", "Aliza", "Alize", "Allene", "Allie", "Allison", "Ally", "Alta", "Althea", "Alva", "Alvena", "Alvera", "Alverta", "Alvina", "Alyce", "Alycia", "Alysa", "Alysha", "Alyson", "Alysson", "Amalia", "Amanda", "Amara", "Amaya", "Amber", "Amelia", "Amelie", "Amely", "America", "Amie", "Amina", "Amira", "Amiya", "Amy", "Amya", "Ana", "Anabel", "Anabelle", "Anahi", "Anais", "Anastasia", "Andreane", "Andreanne", "Angela", "Angelica", "Angelina", "Angeline", "Angelita", "Angie", "Anika", "Anissa", "Anita", "Aniya", "Aniyah", "Anjali", "Anna", "Annabel", "Annabell", "Annabelle", "Annalise", "Annamae", "Annamarie", "Anne", "Annetta", "Annette", "Annie", "Antoinette", "Antonetta", "Antonette", "Antonia", "Antonietta", "Antonina", "Anya", "April", "Ara", "Araceli", "Aracely", "Ardella", "Ardith", "Ariane", "Arianna", "Arielle", "Arlene", "Arlie", "Arvilla", "Aryanna", "Asa", "Asha", "Ashlee", "Ashleigh", "Ashley", "Ashly", "Ashlynn", "Ashtyn", "Asia", "Assunta", "Astrid", "Athena", "Aubree", "Aubrey", "Audie", "Audra", "Audreanne", "Audrey", "Augusta", "Augustine", "Aurelia", "Aurelie", "Aurore", "Autumn", "Ava", "Avis", "Ayana", "Ayla", "Aylin",
 		"Baby", "Bailee", "Barbara", "Beatrice", "Beaulah", "Bella", "Belle", "Berenice", "Bernadette", "Bernadine", "Berneice", "Bernice", "Berniece", "Bernita", "Bert", "Beryl", "Bessie", "Beth", "Bethany", "Bethel", "Betsy", "Bette", "Bettie", "Betty", "Bettye", "Beulah", "Beverly", "Bianka", "Billie", "Birdie", "Blanca", "Blanche", "Bonita", "Bonnie", "Brandi", "Brandy", "Brandyn", "Breana", "Breanna", "Breanne", "Brenda", "Brenna", "Bria", "Briana", "Brianne", "Bridget", "Bridgette", "Bridie", "Brielle", "Brigitte", "Brionna", "Brisa", "Britney", "Brittany", "Brooke", "Brooklyn", "Bryana", "Bulah", "Burdette", "Burnice",
@@ -186,7 +197,7 @@ func (p PersonProvider) firstNamesFemale() []string {
 	}
 }
 
-func (p PersonProvider) lastNames() []string {
+func (p EnglishPersonProvider) LastNames() []string {
 	return []string{
 		"Abbott", "Abernathy", "Abshire", "Adams", "Altenwerth", "Anderson", "Ankunding", "Armstrong", "Auer", "Aufderhar",
 		"Bahringer", "Bailey", "Balistreri", "Barrows", "Bartell", "Bartoletti", "Barton", "Bashirian", "Batz", "Bauch", "Baumbach", "Bayer", "Beahan", "Beatty", "Bechtelar", "Becker", "Bednar", "Beer", "Beier", "Berge", "Bergnaum", "Bergstrom", "Bernhard", "Bernier", "Bins", "Blanda", "Blick", "Block", "Bode", "Boehm", "Bogan", "Bogisich", "Borer", "Bosco", "Botsford", "Boyer", "Boyle", "Bradtke", "Brakus", "Braun", "Breitenberg", "Brekke", "Brown", "Bruen", "Buckridge",
@@ -212,15 +223,15 @@ func (p PersonProvider) lastNames() []string {
 	}
 }
 
-func (p PersonProvider) firstNames() []string {
-	return append(p.firstNamesMale(), p.firstNamesFemale()...)
+func (p EnglishPersonProvider) FirstNames() []string {
+	return append(p.FirstNamesMale(), p.FirstNamesFemale()...)
 }
 
-func (p PersonProvider) genders() []string {
+func (p EnglishPersonProvider) Genders() []string {
 	return []string{genderFemale, genderMale, "Prefer not to say"}
 }
 
-func (p PersonProvider) suffixes() []string {
+func (p EnglishPersonProvider) Suffixes() []string {
 	return []string{
 		"Jr.", "Sr.", "I", "II", "III", "IV", "V", "MD", "DDS", "PhD", "DVM",
 	}
