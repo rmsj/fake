@@ -2,6 +2,7 @@ package faker
 
 import (
 	"math/rand"
+	"net"
 	"strings"
 
 	"github.com/rmsj/faker/random"
@@ -35,7 +36,7 @@ func NewInternet(provider InternetProvider, person person) internet {
 
 //Username returns a random username
 func (i internet) Username() string {
-	userNameFormat := random.FromSliceOfString(i.Provider.UserNameFormats())
+	userNameFormat := random.StringFromSlice(i.Provider.UserNameFormats())
 
 	var userName string
 	if strings.Contains(userNameFormat, "firstName") {
@@ -49,7 +50,7 @@ func (i internet) Username() string {
 
 //Email returns a random email address
 func (i internet) Email() string {
-	emailFormat := random.FromSliceOfString(i.Provider.EmailFormats())
+	emailFormat := random.StringFromSlice(i.Provider.EmailFormats())
 
 	var email string
 	if strings.Contains(emailFormat, "userName") {
@@ -59,10 +60,10 @@ func (i internet) Email() string {
 		email = strings.ReplaceAll(email, "{{domainName}}", i.DomainName())
 	}
 	if strings.Contains(email, "freeEmailDomain") {
-		email = strings.ReplaceAll(email, "{{freeEmailDomain}}", random.FromSliceOfString(i.Provider.FreeEmailDomains()))
+		email = strings.ReplaceAll(email, "{{freeEmailDomain}}", random.StringFromSlice(i.Provider.FreeEmailDomains()))
 	}
 	if strings.Contains(email, "safeEmailDomain") {
-		email = strings.ReplaceAll(email, "{{safeEmailDomain}}", random.FromSliceOfString(i.Provider.SafeEmailDomains()))
+		email = strings.ReplaceAll(email, "{{safeEmailDomain}}", random.StringFromSlice(i.Provider.SafeEmailDomains()))
 	}
 
 	return strings.ToLower(i.toAscii(email))
@@ -70,12 +71,12 @@ func (i internet) Email() string {
 
 //SafeEmail returns a random email address from a safe domain
 func (i internet) SafeEmail() string {
-	return strings.ToLower(i.Username() + "@" + random.FromSliceOfString(i.Provider.SafeEmailDomains()))
+	return strings.ToLower(i.Username() + "@" + random.StringFromSlice(i.Provider.SafeEmailDomains()))
 }
 
 //FreeEmail returns a random free email address
 func (i internet) FreeEmail() string {
-	return strings.ToLower(i.Username() + "@" + random.FromSliceOfString(i.Provider.FreeEmailDomains()))
+	return strings.ToLower(i.Username() + "@" + random.StringFromSlice(i.Provider.FreeEmailDomains()))
 }
 
 //CompanyEmail returns a random "company" email address
@@ -105,7 +106,7 @@ func (i internet) UrlFormats() []string {
 
 // Url provides a random URL
 func (i internet) Url() string {
-	urlFormat := random.FromSliceOfString(i.Provider.UrlFormats())
+	urlFormat := random.StringFromSlice(i.Provider.UrlFormats())
 
 	var url string
 	if strings.Contains(urlFormat, "domainName") {
@@ -119,10 +120,10 @@ func (i internet) Url() string {
 }
 
 func (i internet) slug(size int) string {
-	slug := random.FromSliceOfString(i.Provider.Words())
+	slug := random.StringFromSlice(i.Provider.Words())
 	if size > 1 {
 		for words := 0; words < size-1; words++ {
-			slug = strings.Join([]string{slug, random.FromSliceOfString(i.Provider.Words())}, "-")
+			slug = strings.Join([]string{slug, random.StringFromSlice(i.Provider.Words())}, "-")
 		}
 	}
 
@@ -134,7 +135,36 @@ func (i internet) domainWord() string {
 }
 
 func (i internet) tld() string {
-	return random.FromSliceOfString(i.Provider.Tld())
+	return random.StringFromSlice(i.Provider.Tld())
+}
+
+// IPv4 generates a IP v4
+func (i internet) IPv4() string {
+	size := 4
+	ip := make([]byte, size)
+	for i := 0; i < size; i++ {
+		ip[i] = byte(rand.Intn(256))
+	}
+	return net.IP(ip).To4().String()
+}
+
+// IPv6 generates random IPv6 address
+func (i internet) IPv6() string {
+	size := 16
+	ip := make([]byte, size)
+	for i := 0; i < size; i++ {
+		ip[i] = byte(rand.Intn(256))
+	}
+	return net.IP(ip).To16().String()
+}
+
+// MacAddress get mac address randomly in string
+func (i internet) MacAddress() string {
+	ip := make([]byte, 6)
+	for i := 0; i < 6; i++ {
+		ip[i] = byte(rand.Intn(256))
+	}
+	return net.HardwareAddr(ip).String()
 }
 
 func (i internet) toAscii(s string) string {
