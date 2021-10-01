@@ -5,6 +5,7 @@ import (
 	"net"
 	"strings"
 
+	"github.com/rmsj/faker/provider"
 	"github.com/rmsj/faker/random"
 )
 
@@ -24,13 +25,16 @@ type InternetProvider interface {
 type internet struct {
 	Provider InternetProvider
 	Person   person
+	words    []string
 }
 
 // NewInternet constructs a internet type value and returns it
-func NewInternet(provider InternetProvider, person person) internet {
+func NewInternet(p InternetProvider, person person) internet {
+	lorem := provider.NewEnglishLoremProvider()
 	return internet{
-		Provider: provider,
+		Provider: p,
 		Person:   person,
+		words:    lorem.Words(),
 	}
 }
 
