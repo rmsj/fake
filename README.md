@@ -17,13 +17,13 @@ development, stress-test persistence layer, etc. So this Faker is heavily based 
 
 ## Installation
 
-You can simply add the package `github.com/rmsj/faker` to you import section and run `go mod tidy` 
+You can simply add the package `github.com/rmsj/fake` to you import section and run `go mod tidy` 
 
 It's still early days in development so API might change. 
 To upgrade, or downgrade the dependency, run go get:
 
 ```sh
-go get github.com/rmsj/faker@v0.0.1
+go get github.com/rmsj/fake@v0.0.1
 ```
 
 Using the appropriate version number you want.
@@ -41,8 +41,8 @@ package main
 
 import (
 	"fmt"
-	"github.com/rmsj/faker"
-	"github.com/rmsj/faker/provider"
+	"github.com/rmsj/fake"
+	"github.com/rmsj/fake/provider"
 )
 
 func main() {
@@ -73,8 +73,8 @@ package main
 
 import (
 	"fmt"
-	"github.com/rmsj/faker"
-	"github.com/rmsj/faker/provider"
+	"github.com/rmsj/fake"
+	"github.com/rmsj/fake/provider"
 )
 
 type user struct {
@@ -146,8 +146,8 @@ package main
 
 import (
 	"fmt"
-	"github.com/rmsj/faker"
-	"github.com/rmsj/faker/provider"
+	"github.com/rmsj/fake"
+	"github.com/rmsj/fake/provider"
 
 	"github.com/your-name-or-company/pt_provider"
 )
