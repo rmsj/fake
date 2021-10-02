@@ -43,3 +43,28 @@ func (f Fake) Factory(builder Builder, n int) []interface{} {
 
 	return b
 }
+
+// ChangePersonProvider changes the data provider for person related fake data generation
+func (f Fake) ChangePersonProvider(p PersonProvider) {
+	f.person = p
+}
+
+// ChangeInternetProvider changes the data provider for internet related fake data generation
+func (f Fake) ChangeInternetProvider(i InternetProvider) {
+	f.internet = i
+}
+
+// ChangeTextProvider changes the data provider for text related fake data generation
+func (f Fake) ChangeTextProvider(t TextProvider) {
+	f.text = t
+}
+
+// ChangeLoremProvider changes the data provider for lorem (dummy text) related fake data generation
+func (f Fake) ChangeLoremProvider(l LoremProvider) {
+	f.lorem = l
+}
+
+// ChangeDNAProvider changes the data provider for DNA sequence related fake data generation
+func (f Fake) ChangeDNAProvider(d DNAProvider) {
+	f.dna = d
+}

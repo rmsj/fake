@@ -1,6 +1,6 @@
-# Faker
+# Fake
 
-Faker is a Go package that generates fake data for you to help with development.
+Fake is a Go package that generates fake data for you to help with development.
 It tris to give a simple API to access anywhere.
 
 Coming from a PHP background, I like the way [PHP Faker](https://github.com/fzaninotto/Faker) works and how 
@@ -17,38 +17,41 @@ development, stress-test persistence layer, etc. So this Faker is heavily based 
 
 ## Installation
 
-You can simply add the package `github.com/rmsj/faker` to you import section and run `go mod tidy` 
+You can simply add the package `github.com/rmsj/fake` to you import section and run `go mod tidy` 
 
 It's still early days in development so API might change. 
 To upgrade, or downgrade the dependency, run go get:
 
 ```sh
-go get github.com/rmsj/faker@v0.0.1
+go get github.com/rmsj/fake@v0.0.2
 ```
 
 Using the appropriate version number you want.
 
 ## Basic Usage
 
-Faker API, as of version 0.0.1 has only two `provider` to help with generation of fake data.
+Fake API, as of version 0.0.2 has data generation capability  and `providers` for person, internet, text, lotem ipsum text and DNA sequences. 
 
-- Person - for names 
-- Internet - for email, domain, urls, etc.
+- PersonProvider
+  - for first and last names, gender, etc.
+- InternetProvider
+  - for email, domain names, user names, urls, etc.
+- TextProvider 
+  - for "real sentences" randomized from Alice in Wonder Land.
+- DNAProvider
+  - for generation of random fake DNA sequences of `n` length.
 
 ```go
 package main
 
 import (
 	"fmt"
-	"github.com/rmsj/faker"
-	"github.com/rmsj/faker/data"
+	"github.com/rmsj/fake"
 )
 
 func main() {
-	pp := provider.NewEnglishPersonProvider()
-	ip := provider.NewEnglishInternetProvider()
 
-	f, err := faker.New(pp, ip)
+	f, err := fake.New()
 	if err != nil {
 		panic(err)
 	}
@@ -72,8 +75,7 @@ package main
 
 import (
 	"fmt"
-	"github.com/rmsj/faker"
-	"github.com/rmsj/faker/data"
+	"github.com/rmsj/fake"
 )
 
 type user struct {
@@ -83,10 +85,8 @@ type user struct {
 }
 
 func main() {
-	pp := provider.NewEnglishPersonProvider()
-	ip := provider.NewEnglishInternetProvider()
 
-	f, err := faker.New(pp, ip)
+	f, err := fake.New()
 	if err != nil {
 		panic(err)
 	}
@@ -113,10 +113,10 @@ func main() {
 }
 ```
 
-## Adding Providers
+## Adding Your Own Providers
 
-The number of providers will grow over time and the idea is that you can change a specific `faker` provider by implementing 
-the required interface with a different set of data - to have more control, change language, etc.
+The number of providers will grow over time and the idea is that you can change a specific `provider` by implementing 
+the required interface with a different set of data - to have more control of what data is generated, change language, etc.
 
 So you could implement the `PersonProvider` interface to have `portuguese` names, for example, and the [basic usabe](#basic-usage) example above 
 would look like:
@@ -125,19 +125,14 @@ would look like:
 package pt_provider
 
 
-type PortuguesePersonProvider struct {
-	//
-}
+type PortuguesePersonProvider struct {}
 
-func NewPortuguesePersonProvider() PortuguesePersonProvider {
-	// construct code here
-}
 
 func (p PortuguesePersonProvider) FirstNames() []string {
-	return []string{"Manoel", "João"}
+	return []string{"Manoel", "Pedro"}
 }
 
-// rest of implementation ...
+// rest of implementation for all required methods on interface PersonProvider...
 ```
 
 ```go
@@ -145,26 +140,25 @@ package main
 
 import (
 	"fmt"
-	"github.com/rmsj/faker"
-	"github.com/rmsj/faker/data"
+	"github.com/rmsj/fake"
 
-	"github.com/your-name-or-company/pt_provider"
+	"github.com/user/project/pt_provider"
 )
 
 func main() {
-	pp := pt_provider.NewPortuguesePersonProvider()
-	ip := provider.NewEnglishInternetProvider()
 
-	f, err := faker.New(pp, ip)
+	f, err := fake.New()
 	if err != nil {
 		panic(err)
 	}
+	
+	f.SetPersonProvider(pt_provider)
 
-	// print random first name
+	// print random first name from your list of names
 	fmt.Println(f.FirstName())
 }
 ```
 
 ## Work In Progress
 
-The package is a work in progress as I'm slowly adding more `fakers` and `providers` to it.
+The package is a work in progress as I'm slowly adding more `providers` and related data generation from them.
