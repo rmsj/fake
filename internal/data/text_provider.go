@@ -1,27 +1,17 @@
-package provider
+package data
 
-import (
-	"regexp"
-)
+// TextProvider provides data for english language for "real" random text.
+type TextProvider struct{}
 
-// EnglishTextProvider provides data for english language for "real" random text.
-type EnglishTextProvider struct {
-	lang    string
-	country string
+// NewTextProvider builds an TextProvider and returns it
+func NewTextProvider() TextProvider {
+	return TextProvider{}
 }
 
-// NewEnglishTextProvider builds an EnglishTextProvider and returns it
-func NewEnglishTextProvider() EnglishTextProvider {
-	return EnglishTextProvider{
-		lang:    "en",
-		country: "us",
-	}
-}
+// Source provides the source to generate random "real" text - can be anything
+func (e TextProvider) Source() string {
 
-// Text provides the source to generate random "real" text - can be anything
-func (e EnglishTextProvider) Text() string {
-
-	text := `
+	return `
 	CHAPTER I. Down the Rabbit-Hole
 
 Alice was beginning to get very tired of sitting by her sister on the
@@ -3349,9 +3339,6 @@ remembering her own child-life, and the happy summer days.
 
               THE END
 	`
-
-	re := regexp.MustCompile("\\)\\(")
-	return re.ReplaceAllString(text, "") + "."
 
 	/*
 		End of Project Gutenberg's Alice's Adventures in Wonderland, by Lewis Carroll

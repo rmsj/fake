@@ -35,14 +35,13 @@ Faker API, as of version 0.0.1 has only two `provider` to help with generation o
 - Person - for names 
 - Internet - for email, domain, urls, etc.
 
-
 ```go
 package main
 
 import (
 	"fmt"
 	"github.com/rmsj/faker"
-	"github.com/rmsj/faker/provider"
+	"github.com/rmsj/faker/data"
 )
 
 func main() {
@@ -74,13 +73,13 @@ package main
 import (
 	"fmt"
 	"github.com/rmsj/faker"
-	"github.com/rmsj/faker/provider"
+	"github.com/rmsj/faker/data"
 )
 
 type user struct {
 	firstName string
-	lastName string
-	email string
+	lastName  string
+	email     string
 }
 
 func main() {
@@ -95,8 +94,8 @@ func main() {
 	builder := func() interface{} {
 		return user{
 			firstName: f.FirstName(),
-			lastName: f.LastName(),
-			email: f.Email(),
+			lastName:  f.LastName(),
+			email:     f.Email(),
 		}
 	}
 
@@ -147,7 +146,7 @@ package main
 import (
 	"fmt"
 	"github.com/rmsj/faker"
-	"github.com/rmsj/faker/provider"
+	"github.com/rmsj/faker/data"
 
 	"github.com/your-name-or-company/pt_provider"
 )

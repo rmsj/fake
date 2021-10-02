@@ -1,4 +1,4 @@
-package faker
+package fake
 
 import (
 	"errors"
@@ -6,29 +6,12 @@ import (
 	"strings"
 	"unicode"
 
-	"github.com/rmsj/faker/random"
+	"github.com/rmsj/fake/internal/random"
 )
 
-// EnglishTextProvider must be implemented by types that wants to provide data sourcefor texts
-type EnglishTextProvider interface {
-	Text() string
-}
-
-// Text provides random "real text" sentences
-type Text struct {
-	Provider EnglishTextProvider
-	chain    map[int]map[string][]string // chain caches the consecutive words on the chain by prefix length
-	prefixes map[int][]string            // prefixes caches all the prefixes prefix length
-}
-
-// NewText constructs a Text faker type value and returns it
-func NewText(provider EnglishTextProvider) Text {
-
-	return Text{
-		Provider: provider,
-		chain:    make(map[int]map[string][]string),
-		prefixes: make(map[int][]string),
-	}
+// TextProvider must be implemented by types that wants to provide data source for texts
+type TextProvider interface {
+	Source() string
 }
 
 // RealText generates a text string by the Markov chain algorithm.
@@ -42,7 +25,7 @@ func NewText(provider EnglishTextProvider) Text {
 // generated text usually doesn't make sense. Higher index sizes (up to 5)
 // produce more correct text, at the price of less randomness.
 // @return string
-func (t Text) RealText(maxWordCount int, prefixLen int) (string, error) {
+func (f Fake) RealText(maxWordCount int, prefixLen int) (string, error) {
 	if maxWordCount < 10 {
 		return "", errors.New("maxWordCount must be at least 10")
 	}
@@ -55,11 +38,14 @@ func (t Text) RealText(maxWordCount int, prefixLen int) (string, error) {
 		return "", errors.New("prefixLength must be at most 5")
 	}
 
-	t.generateChain(prefixLen)
+	err := f.generateChain(prefixLen)
+	if err != nil {
+		return "", err
+	}
 
 	var result []string
-	words := t.chain[prefixLen]
-	next := random.StringFromSlice(t.prefixes[prefixLen])
+	words := f.textChain[prefixLen]
+	next := random.StringFromSlice(f.textPrefixes[prefixLen])
 
 	for {
 
@@ -79,7 +65,7 @@ func (t Text) RealText(maxWordCount int, prefixLen int) (string, error) {
 		next = strings.Join(currentPrefix, " ")
 
 		// ensure text starts with an uppercase letter
-		if len(result) == 0 && !t.validTextStart(word) {
+		if len(result) == 0 && !f.validTextStart(word) {
 			continue
 		}
 
@@ -110,10 +96,10 @@ func (t Text) RealText(maxWordCount int, prefixLen int) (string, error) {
 
 //generateChain reads text from the provided Reader and
 // parses it into prefixes and suffixes that are stored in t.chain.
-func (t Text) generateChain(prefixLen int) error {
+func (f Fake) generateChain(prefixLen int) error {
 
 	// do we have a chain cache for this prefixLength?
-	if _, ok := t.chain[prefixLen]; !ok {
+	if _, ok := f.textChain[prefixLen]; !ok {
 
 		// chain contains is a map of prefixes to a list of suffixes.
 		// A prefix is a string of prefixLen words joined with spaces.
@@ -121,7 +107,7 @@ func (t Text) generateChain(prefixLen int) error {
 		chain := make(map[string][]string)
 
 		re := regexp.MustCompile("/\\s+/u")
-		text := re.ReplaceAllString(t.Provider.Text(), " ")
+		text := re.ReplaceAllString(f.text.Source(), " ")
 
 		// prefix is a Markov chain prefix of one or more words.
 		var prefix []string
@@ -155,15 +141,15 @@ func (t Text) generateChain(prefixLen int) error {
 		}
 
 		// cache to help with random text generation later on
-		t.prefixes[prefixLen] = prefixes
-		t.chain[prefixLen] = chain
+		f.textPrefixes[prefixLen] = prefixes
+		f.textChain[prefixLen] = chain
 	}
 
 	return nil
 }
 
 // validTextStart checks if the first character of the word is upper case
-func (t Text) validTextStart(word string) bool {
+func (f Fake) validTextStart(word string) bool {
 	runes := []rune(word)
 	if !unicode.IsUpper(runes[0]) || !unicode.IsLetter(runes[0]) {
 		return false

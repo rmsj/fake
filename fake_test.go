@@ -1,11 +1,11 @@
-package faker_test
+package fake_test
 
 import (
-	"github.com/rmsj/faker"
-	"github.com/rmsj/faker/provider"
-	"github.com/rmsj/faker/tests"
 	"reflect"
 	"testing"
+
+	"github.com/rmsj/fake"
+	"github.com/rmsj/fake/tests"
 )
 
 type user struct {
@@ -16,12 +16,10 @@ type user struct {
 
 func TestFactory(t *testing.T) {
 
-	pp := provider.NewEnglishPersonProvider()
-	ip := provider.NewEnglishInternetProvider()
+	f, err := fake.New()
 
-	f, err := faker.New(pp, ip)
 	if err != nil {
-		t.Fatal("initiating faker", err)
+		t.Fatal("error creating fake instance")
 	}
 
 	builder := func() interface{} {
@@ -47,7 +45,6 @@ func TestFactory(t *testing.T) {
 			// start with test 1
 			testID++
 			tf := func(t *testing.T) {
-				t.Parallel()
 				t.Logf("\tTest %d:\tWhen creating %d value of type user.", testID, test.quantity)
 				{
 					users := f.Factory(builder, test.quantity)
@@ -80,33 +77,6 @@ func TestFactory(t *testing.T) {
 						}
 					}
 					t.Logf(tests.Success("\t", "Test %d:\tShould set all user values correctly for all %d value(s)"), testID, test.quantity)
-
-					v := users[0]
-					u, ok := v.(user)
-					if !ok {
-						t.Fatalf(tests.Failed("\t", "Test %d:\tShould have created a value of type user: %v created."), testID, reflect.TypeOf(v))
-					}
-					t.Logf(tests.Success("\t", "Test %d:\tShould create value of type user."), testID)
-
-					if len(u.firstName) == 0 {
-						t.Fatalf(tests.Failed("\t", "Test %d:\tShould have set user first name: empty."), testID)
-					}
-					t.Logf(tests.Success("\t", "Test %d:\tShould set user first name: %s"), testID, u.firstName)
-
-					if len(u.lastName) == 0 {
-						t.Fatalf(tests.Failed("\t", "Test %d:\tShould have set user last name: empty."), testID)
-					}
-					t.Logf(tests.Success("\t", "Test %d:\tShould set user last name: %s"), testID, u.lastName)
-
-					if len(u.email) == 0 {
-						t.Fatalf(tests.Failed("\t", "Test %d:\tShould have set user email: empty."), testID)
-					}
-					t.Logf(tests.Success("\t", "Test %d:\tShould set user email: %s"), testID, u.email)
-
-					if !tests.ValidEmail(u.email) {
-						t.Fatalf(tests.Failed("\t", "Test %d:\tShould have set user email with valid email address: %s."), testID, u.email)
-					}
-					t.Logf(tests.Success("\t", "Test %d:\tShould set user email with valid email address: %s"), testID, u.email)
 				}
 			}
 
