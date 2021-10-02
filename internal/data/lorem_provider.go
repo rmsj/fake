@@ -1,21 +1,15 @@
-package provider
+package data
 
-// EnglishLoremProvider provides data for english language for ramdom words.
-type EnglishLoremProvider struct {
-	lang    string
-	country string
-}
+// LoremProvider provides data for english language for random words.
+type LoremProvider struct{}
 
-// NewEnglishLoremProvider builds an EnglishLoremProvider and returns it
-func NewEnglishLoremProvider() EnglishLoremProvider {
-	return EnglishLoremProvider{
-		lang:    "en",
-		country: "us",
-	}
+// NewLoremProvider builds an LoremProvider and returns it
+func NewLoremProvider() LoremProvider {
+	return LoremProvider{}
 }
 
 // Words a list of random words
-func (p EnglishLoremProvider) Words() []string {
+func (p LoremProvider) Words() []string {
 	return []string{
 		"alias", "consequatur", "aut", "perferendis", "sit", "voluptatem",
 		"accusantium", "doloremque", "aperiam", "eaque", "ipsa", "quae", "ab",

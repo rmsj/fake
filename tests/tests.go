@@ -10,8 +10,8 @@ import (
 
 // Success and failure markers.
 var (
-	success = "\033[32m\u2713\033[0m"
-	failed  = "\033[31m\u2717\033[0m"
+	success = "\u2713"
+	failed  = "\u2717"
 	reset   = "\033[0m"
 	red     = "\033[31m"
 	green   = "\033[32m"
