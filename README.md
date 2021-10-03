@@ -3,6 +3,12 @@
 Fake is a Go package that generates fake data for you to help with development.
 It tris to give a simple API to access anywhere.
 
+[![codecov](https://codecov.io/gh/rmsj/fake/branch/main/graph/badge.svg)](https://codecov.io/gh/rmsj/fake)
+[![Go Report Card](https://goreportcard.com/badge/github.com/rmsj/fake)](https://goreportcard.com/report/github.com/rmsj/fake)
+[![License](https://img.shields.io/github/license/mashape/apistatus.svg)](https://github.com/bxcodec/fake/blob/main/LICENSE)
+[![GoDoc](https://godoc.org/github.com/rmsj/fake?status.svg)](https://godoc.org/github.com/rmsj/fake)
+[![Go.Dev](https://img.shields.io/badge/go.dev-reference-007d9c?logo=go&logoColor=white)](https://pkg.go.dev/github.com/rmsj/fake/v0.0.2?tab=doc)
+
 Coming from a PHP background, I like the way [PHP Faker](https://github.com/fzaninotto/Faker) works and how 
 easy it is to generate data such as first and last names, emails, domains, texts, etc. to bootstrap databases for 
 development, stress-test persistence layer, etc. So this Faker is heavily based on the same API provided by [PHP Faker](https://github.com/fzaninotto/Faker).

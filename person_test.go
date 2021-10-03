@@ -12,7 +12,7 @@ import (
 var personProvider data.PersonProvider
 var personFake fake.Fake
 
-func setup() {
+func setupPersonTest() {
 	var err error
 	personFake, err = fake.New()
 
@@ -23,7 +23,7 @@ func setup() {
 }
 
 func TestTitle(t *testing.T) {
-	setup()
+	setupPersonTest()
 
 	validTitles := append(personProvider.TitlesMale(), personProvider.TitlesFemale()...)
 	t.Log("Given the need to test creating person title")
@@ -46,7 +46,7 @@ func TestTitle(t *testing.T) {
 }
 
 func TestTitleFemale(t *testing.T) {
-	setup()
+	setupPersonTest()
 
 	validTitles := personProvider.TitlesFemale()
 	t.Log("Given the need to test creating person title")
@@ -69,7 +69,7 @@ func TestTitleFemale(t *testing.T) {
 }
 
 func TestTitleMale(t *testing.T) {
-	setup()
+	setupPersonTest()
 
 	validTitles := personProvider.TitlesMale()
 	t.Log("Given the need to test creating person title")
@@ -92,7 +92,7 @@ func TestTitleMale(t *testing.T) {
 }
 
 func TestFirstName(t *testing.T) {
-	setup()
+	setupPersonTest()
 
 	validNames := personProvider.FirstNames()
 	t.Log("Given the need to test creating person first name")
@@ -115,7 +115,7 @@ func TestFirstName(t *testing.T) {
 }
 
 func TestFirstNameFemale(t *testing.T) {
-	setup()
+	setupPersonTest()
 
 	validNames := personProvider.FirstNamesFemale()
 	t.Log("Given the need to test creating female person first name")
@@ -138,7 +138,7 @@ func TestFirstNameFemale(t *testing.T) {
 }
 
 func TestFirstNameMale(t *testing.T) {
-	setup()
+	setupPersonTest()
 
 	validNames := personProvider.FirstNamesMale()
 	t.Log("Given the need to test creating male person first name")
@@ -161,7 +161,7 @@ func TestFirstNameMale(t *testing.T) {
 }
 
 func TestLastName(t *testing.T) {
-	setup()
+	setupPersonTest()
 
 	validNames := personProvider.LastNames()
 	t.Log("Given the need to test creating a person last name")
@@ -184,7 +184,7 @@ func TestLastName(t *testing.T) {
 }
 
 func TestName(t *testing.T) {
-	setup()
+	setupPersonTest()
 
 	t.Log("Given the need to test creating a person name")
 	{
@@ -206,7 +206,7 @@ func TestName(t *testing.T) {
 }
 
 func TestGender(t *testing.T) {
-	setup()
+	setupPersonTest()
 
 	validGenders := personProvider.Genders()
 	t.Log("Given the need to test creating person gender")
@@ -229,7 +229,7 @@ func TestGender(t *testing.T) {
 }
 
 func TestSuffix(t *testing.T) {
-	setup()
+	setupPersonTest()
 
 	validSuffixes := personProvider.Suffixes()
 	t.Log("Given the need to test creating person name suffix")

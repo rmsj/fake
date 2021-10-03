@@ -74,21 +74,6 @@ func (f Fake) DomainName() string {
 	return f.domainWord() + "." + f.tld()
 }
 
-func (f Fake) UrlFormats() []string {
-	return []string{
-		"http://www.{{domainName}}/",
-		"http://{{domainName}}/",
-		"http://www.{{domainName}}/{{slug}}",
-		"http://www.{{domainName}}/{{slug}}",
-		"https://www.{{domainName}}/{{slug}}",
-		"http://www.{{domainName}}/{{slug}}.html",
-		"http://{{domainName}}/{{slug}}",
-		"http://{{domainName}}/{{slug}}",
-		"http://{{domainName}}/{{slug}}.html",
-		"https://{{domainName}}/{{slug}}.html",
-	}
-}
-
 // Url provides a random URL
 func (f Fake) Url() string {
 	urlFormat := random.StringFromSlice(f.internet.UrlFormats())
@@ -102,25 +87,6 @@ func (f Fake) Url() string {
 	}
 
 	return url
-}
-
-func (f Fake) slug(size int) string {
-	slug := random.StringFromSlice(f.lorem.Words())
-	if size > 1 {
-		for words := 0; words < size-1; words++ {
-			slug = strings.Join([]string{slug, random.StringFromSlice(f.lorem.Words())}, "-")
-		}
-	}
-
-	return slug
-}
-
-func (f Fake) domainWord() string {
-	return strings.ToLower(f.toAscii(f.LastName()))
-}
-
-func (f Fake) tld() string {
-	return random.StringFromSlice(f.internet.Tld())
 }
 
 // IPv4 generates a IP v4
@@ -150,6 +116,25 @@ func (f Fake) MacAddress() string {
 		ip[i] = byte(rand.Intn(256))
 	}
 	return net.HardwareAddr(ip).String()
+}
+
+func (f Fake) slug(size int) string {
+	slug := random.StringFromSlice(f.lorem.Words())
+	if size > 1 {
+		for words := 0; words < size-1; words++ {
+			slug = strings.Join([]string{slug, random.StringFromSlice(f.lorem.Words())}, "-")
+		}
+	}
+
+	return slug
+}
+
+func (f Fake) domainWord() string {
+	return strings.ToLower(f.toAscii(f.LastName()))
+}
+
+func (f Fake) tld() string {
+	return random.StringFromSlice(f.internet.Tld())
 }
 
 func (f Fake) toAscii(s string) string {

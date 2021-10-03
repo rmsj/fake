@@ -49,7 +49,7 @@ func TestDNASequence(t *testing.T) {
 					}
 					t.Logf(tests.Success("\t", "Test %d:\tShould have create a valid DNA Sequence with %d characters length"), testID, test.sequenceSize)
 
-					// clear the text off some stuff
+					// check characters in sequence
 					chars := []string{"A", "C", "G", "T"}
 					reg := strings.Join(chars, "")
 
