@@ -3,6 +3,7 @@ package tests
 
 import (
 	"fmt"
+	"reflect"
 	"regexp"
 
 	"runtime"
@@ -37,6 +38,21 @@ func init() {
 	}
 }
 
+// InArray checks if a given value exists in a specific array and returns the index or -1 if not found
+func InArray(val interface{}, array interface{}) int {
+	values := reflect.ValueOf(array)
+
+	if reflect.TypeOf(array).Kind() == reflect.Slice || values.Len() > 0 {
+		for i := 0; i < values.Len(); i++ {
+			if reflect.DeepEqual(val, values.Index(i).Interface()) {
+				return i
+			}
+		}
+	}
+
+	return -1
+}
+
 // Success prints in green the given string
 func Success(before string, s string) string {
 	return before + fmt.Sprintf("%s%s\t%s%s", green, success, s, reset)
@@ -45,6 +61,11 @@ func Success(before string, s string) string {
 // Failed prints in red the given string
 func Failed(before string, s string) string {
 	return before + fmt.Sprintf("%s%s\\%s%s", red, failed, s, reset)
+}
+
+// Given just prints the "Given" statements on tests in purple
+func Given(s string) string {
+	return fmt.Sprintf("%s%s%s", purple, s, reset)
 }
 
 // Reset returns the code to reset color

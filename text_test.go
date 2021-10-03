@@ -32,7 +32,7 @@ func TestRealText(t *testing.T) {
 			// start with test 1
 			testID++
 			tf := func(t *testing.T) {
-				t.Logf("\tTest %d:\tWhen creating a %d words text.", testID, test.wordCount)
+				t.Logf("\tTest %d:\tWhen creating a %s of %d words.", testID, test.name, test.wordCount)
 				{
 					text, err := f.RealText(test.wordCount, test.prefixLen)
 					if err != nil {

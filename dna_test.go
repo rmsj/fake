@@ -21,25 +21,22 @@ func TestDNASequence(t *testing.T) {
 		name         string
 		sequenceSize int
 	}{
-		{"Too small DNA Sequence", 99},
 		{"Short DNA Sequence", 1000},
 		{"Medium DNA Sequence", 10000},
 		{"Long (ish) text", 65535},
 	}
 
-	t.Log("Given the need to create generate fake 'real text'")
+	t.Log(tests.Given("Given the need to generate random DNA Sequence"))
 	{
 		for testID, test := range tt {
 			// start with test 1
 			testID++
 			tf := func(t *testing.T) {
-				t.Logf("\tTest %d:\tWhen creating a DNA Sequence %d characters.", testID, test.sequenceSize)
+				t.Logf("\tTest %d:\tWhen creating a %s of %d characters.", testID, test.name, test.sequenceSize)
 				{
 					dna, err := f.DNASequence(test.sequenceSize)
-					if err == nil && test.sequenceSize < 100 {
-						t.Fatalf(tests.Failed("\t", "Test %d:\tShould not create DNA sequences smaller than 100 characters. Created one with %d characters"), testID, test.sequenceSize)
-					} else if err != nil {
-						t.Fatalf(tests.Success("\t", "Test %d:\tShould not create a DNA sequence smaller than 100 characters: %v"), testID, err)
+					if err != nil {
+						t.Fatalf(tests.Failed("\t", "Test %d:\tShould have created DNA sequences: %v"), testID, err)
 					}
 
 					if len(dna) == 0 {
@@ -62,6 +59,40 @@ func TestDNASequence(t *testing.T) {
 					if len(result) > 0 {
 						t.Fatalf(tests.Failed("\t", "Test %d:\tShould have created a valid DNA sequence only using characters A, C, G and T: %s"), testID, result)
 					}
+				}
+			}
+
+			t.Run(test.name, tf)
+
+		}
+	}
+
+	tt = []struct {
+		name         string
+		sequenceSize int
+	}{
+		{"Too small DNA Sequence", 1},
+		{"Too small DNA Sequence", 22},
+		{"Too small DNA Sequence", 99},
+	}
+
+	t.Log(tests.Given("Given the need to not generate too small SNA sequence"))
+	{
+		for testID, test := range tt {
+			// start with test 1
+			testID++
+			tf := func(t *testing.T) {
+				t.Logf("\tTest %d:\tWhen creating a %s of %d characters.", testID, test.name, test.sequenceSize)
+				{
+					dna, err := f.DNASequence(test.sequenceSize)
+					if err == nil {
+						t.Logf(tests.Success("\t", "Test %d:\tShould not create DNA sequences smaller than 100 characters. Created one with %d characters"), testID, test.sequenceSize)
+					}
+
+					if len(dna) != 0 {
+						t.Fatalf(tests.Failed("\t", "Test %d:\tShould have created a valid DNA sequence: %s"), testID, dna)
+					}
+					t.Logf(tests.Success("\t", "Test %d:\tShould not have created a valid DNA Sequence"), testID)
 				}
 			}
 
