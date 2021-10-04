@@ -1,6 +1,7 @@
 package fake_test
 
 import (
+	"regexp"
 	"strings"
 	"testing"
 
@@ -119,23 +120,23 @@ func TestBuzzPhrase(t *testing.T) {
 func TestEIN(t *testing.T) {
 	setupCompanyTest()
 
-	t.Log(tests.Given("Given the need to generate random buzz phrases"))
+	t.Log(tests.Given("Given the need to generate random EINs"))
 	{
 		for testID := 1; testID < 6; testID++ {
 			t.Logf("\tTest %d:\tWhen creating a company buzz phrase.", testID)
 			{
-				buzz := companyFake.BuzzPhrase()
+				ein := companyFake.EIN()
 
-				if len(buzz) == 0 {
-					t.Fatalf(tests.Failed("\t", "Test %d:\tShould create valid company buzz phrase but it's empty."), testID)
+				if len(ein) == 0 {
+					t.Fatalf(tests.Failed("\t", "Test %d:\tShould create valid company EIN but it's empty."), testID)
 				}
-				t.Logf(tests.Success("\t", "Test %d:\tShould create valid company buzz phrase."), testID)
+				t.Logf(tests.Success("\t", "Test %d:\tShould create valid company EIN."), testID)
 
-				expectedLen := len(companyProvider.BuzzWords())
-				if len(strings.Fields(buzz)) != expectedLen {
-					t.Fatalf(tests.Failed("\t", "Test %d:\tShould create valid company buzz phrase with %d words: %s."), testID, expectedLen, buzz)
+				re := regexp.MustCompile("^\\d{2}-\\d{7}$")
+				if !re.MatchString(ein) {
+					t.Fatalf(tests.Failed("\t", "Test %d:\tShould create valid company EIN: %s."), testID, ein)
 				}
-				t.Logf(tests.Success("\t", "Test %d:\tShould create valid company buzz phrase with %d words: %s."), testID, expectedLen, buzz)
+				t.Logf(tests.Success("\t", "Test %d:\tShould create valid company EIN: %s."), testID, ein)
 			}
 		}
 	}

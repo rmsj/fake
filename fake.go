@@ -27,6 +27,7 @@ func New() (Fake, error) {
 		text:         data.NewTextProvider(),
 		lorem:        data.NewLoremProvider(),
 		dna:          data.NewDNAProvider(),
+		company:      data.NewCompanyProvider(),
 		textChain:    make(map[int]map[string][]string),
 		textPrefixes: make(map[int][]string),
 	}
