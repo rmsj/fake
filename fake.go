@@ -14,6 +14,7 @@ type Fake struct {
 	text         TextProvider
 	lorem        LoremProvider
 	dna          DNAProvider
+	company      CompanyProvider
 	textChain    map[int]map[string][]string // chain caches the consecutive words on the chain by prefix length
 	textPrefixes map[int][]string            // prefixes caches all the prefixes prefix length
 }
