@@ -7,7 +7,7 @@ It tris to give a simple API to access anywhere.
 [![Go Report Card](https://goreportcard.com/badge/github.com/rmsj/fake)](https://goreportcard.com/report/github.com/rmsj/fake)
 [![License](https://img.shields.io/github/license/mashape/apistatus.svg)](https://github.com/bxcodec/fake/blob/main/LICENSE)
 [![GoDoc](https://godoc.org/github.com/rmsj/fake?status.svg)](https://godoc.org/github.com/rmsj/fake)
-[![Go.Dev](https://img.shields.io/badge/go.dev-reference-007d9c?logo=go&logoColor=white)](https://pkg.go.dev/github.com/rmsj/fake/v0.0.4?tab=doc)
+[![Go.Dev](https://img.shields.io/badge/go.dev-reference-007d9c?logo=go&logoColor=white)](https://pkg.go.dev/github.com/rmsj/fake/v0.0.3?tab=doc)
 
 Coming from a PHP background, I like the way [PHP Faker](https://github.com/fzaninotto/Faker) works and how 
 easy it is to generate data such as first and last names, emails, domains, texts, etc. to bootstrap databases for 
@@ -29,7 +29,7 @@ It's still early days in development so API might change.
 To upgrade, or downgrade the dependency, run go get:
 
 ```sh
-go get github.com/rmsj/fake@v0.0.2
+go get github.com/rmsj/fake@v0.0.3
 ```
 
 Using the appropriate version number you want.
@@ -46,6 +46,10 @@ Fake API, as of version 0.0.2 has data generation capability  and `providers` fo
   - for "real sentences" randomized from Alice in Wonder Land.
 - DNAProvider
   - for generation of random fake DNA sequences of `n` length.
+- CompanyProvider
+  - for generation of random fake company data.
+- ImageProvider
+  - uses [Lorem Pixel](http://lorempixel.com) to generate random images.
 
 ```go
 package main
