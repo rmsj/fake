@@ -15,6 +15,7 @@ type Fake struct {
 	lorem        LoremProvider
 	dna          DNAProvider
 	company      CompanyProvider
+	image        ImageProvider
 	textChain    map[int]map[string][]string // chain caches the consecutive words on the chain by prefix length
 	textPrefixes map[int][]string            // prefixes caches all the prefixes prefix length
 }
@@ -28,6 +29,7 @@ func New() (Fake, error) {
 		lorem:        data.NewLoremProvider(),
 		dna:          data.NewDNAProvider(),
 		company:      data.NewCompanyProvider(),
+		image:        data.NewImageProvider(),
 		textChain:    make(map[int]map[string][]string),
 		textPrefixes: make(map[int][]string),
 	}
