@@ -54,6 +54,7 @@ func TestSentence(t *testing.T) {
 		name      string
 		wordCount int
 	}{
+		{"Invalid Length", 0},
 		{"Short Sentence", 25},
 		{"Medium Sentence", 100},
 		{"Long (ish) Sentence", 255},
@@ -69,6 +70,11 @@ func TestSentence(t *testing.T) {
 				{
 					lorem := loremFake.Sentence(test.wordCount)
 
+					if len(lorem) == 0 && test.wordCount == 0 {
+						t.Logf(tests.Success("\t", "Test %d:\tShould not create valid lorem ipsum sentence with invalid length <= 0."), testID)
+						return
+					}
+
 					if len(lorem) == 0 {
 						t.Fatalf(tests.Failed("\t", "Test %d:\tShould create valid lorem ipsum sentence but it's empty."), testID)
 					}
@@ -79,6 +85,54 @@ func TestSentence(t *testing.T) {
 						t.Fatalf(tests.Failed("\t", "Test %d:\tShould have created a valid lorem ipsum sentence with %d words long: %d"), testID, test.wordCount, wordCount)
 					}
 					t.Logf(tests.Success("\t", "Test %d:\tShould have created a valid lorem ipsum sentence with %d words long"), testID, test.wordCount)
+
+					for _, word := range strings.Fields(lorem) {
+						if tests.InArray(word, validWords) == -1 {
+							t.Fatalf(tests.Failed("\t", "Test %d:\tShould have created a valid lorem ipsum (%s) within proper range: \"%s\"."), testID, word, strings.Join(validWords, ", "))
+						}
+					}
+					t.Logf(tests.Success("\t", "Test %d:\tShould create a valid lorem ipsum sentence."), testID)
+				}
+			}
+
+			t.Run(test.name, tf)
+
+		}
+	}
+}
+
+func TestParagraph(t *testing.T) {
+	setupLoremTest()
+
+	tt := []struct {
+		name          string
+		sentenceCount int
+	}{
+		{"Invalid Length", 0},
+		{"Short Paragraph", 2},
+		{"Medium Sentence", 10},
+		{"Long (ish) Sentence", 20},
+	}
+	validWords := loremProvider.Words()
+	t.Log(tests.Given("Given the need to generate random Lorem Ipsum text sequence"))
+	{
+		for testID, test := range tt {
+			// start with test 1
+			testID++
+			tf := func(t *testing.T) {
+				t.Logf("\tTest %d:\tWhen creating a %s of %d words.", testID, test.name, test.sentenceCount)
+				{
+					lorem := loremFake.Paragraph(test.sentenceCount)
+
+					if len(lorem) == 0 && test.sentenceCount == 0 {
+						t.Logf(tests.Success("\t", "Test %d:\tShould not create valid lorem ipsum sentence with invalid length <= 0."), testID)
+						return
+					}
+
+					if len(lorem) == 0 {
+						t.Fatalf(tests.Failed("\t", "Test %d:\tShould create valid lorem ipsum sentence but it's empty."), testID)
+					}
+					t.Logf(tests.Success("\t", "Test %d:\tShould create valid lorem ipsum sentence."), testID)
 
 					for _, word := range strings.Fields(lorem) {
 						if tests.InArray(word, validWords) == -1 {

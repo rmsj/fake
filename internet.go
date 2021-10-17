@@ -30,7 +30,7 @@ func (f Fake) Username() string {
 	if strings.Contains(userName, "lastName") {
 		userName = strings.ReplaceAll(userName, "{{lastName}}", f.LastName())
 	}
-	return userName
+	return f.toAscii(userName)
 }
 
 //Email returns a random email address
@@ -51,17 +51,17 @@ func (f Fake) Email() string {
 		email = strings.ReplaceAll(email, "{{safeEmailDomain}}", random.StringFromSlice(f.internet.SafeEmailDomains()))
 	}
 
-	return strings.ToLower(f.toAscii(email))
+	return f.toAscii(strings.ToLower(f.toAscii(email)))
 }
 
 //SafeEmail returns a random email address from a safe domain
 func (f Fake) SafeEmail() string {
-	return strings.ToLower(f.Username() + "@" + random.StringFromSlice(f.internet.SafeEmailDomains()))
+	return f.toAscii(strings.ToLower(f.Username() + "@" + random.StringFromSlice(f.internet.SafeEmailDomains())))
 }
 
 //FreeEmail returns a random free email address
 func (f Fake) FreeEmail() string {
-	return strings.ToLower(f.Username() + "@" + random.StringFromSlice(f.internet.FreeEmailDomains()))
+	return f.toAscii(strings.ToLower(f.Username() + "@" + random.StringFromSlice(f.internet.FreeEmailDomains())))
 }
 
 //CompanyEmail returns a random "company" email address
@@ -86,7 +86,7 @@ func (f Fake) Url() string {
 		url = strings.ReplaceAll(url, "{{slug}}", f.slug(rand.Intn(3)))
 	}
 
-	return url
+	return f.toAscii(url)
 }
 
 // IPv4 generates a IP v4
@@ -126,7 +126,7 @@ func (f Fake) slug(size int) string {
 		}
 	}
 
-	return slug
+	return f.toAscii(slug)
 }
 
 func (f Fake) domainWord() string {

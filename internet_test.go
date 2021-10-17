@@ -135,7 +135,7 @@ func TestCompanyEmail(t *testing.T) {
 		for testID := 1; testID < 6; testID++ {
 			t.Logf("\tTest %d:\tWhen creating an email addresas.", testID)
 			{
-				email := internetFake.Email()
+				email := internetFake.CompanyEmail()
 
 				if len(email) == 0 {
 					t.Fatalf(tests.Failed("\t", "Test %d:\tShould create valid email but it's empty."), testID)
