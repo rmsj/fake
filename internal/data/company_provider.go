@@ -382,7 +382,8 @@ func (c CompanyProvider) JobTitles() []string {
 
 // EIN returns a random Employer Identification Number in the format XX-XXXXXXX
 // see https://en.wikipedia.org/wiki/Employer_Identification_Number
-func (c CompanyProvider) EIN() string {
+// the idea behind providing the numbers is to allow for deterministic values
+func (c CompanyProvider) EIN(rand1, rand2 int) string {
 	rand.Seed(time.Now().UnixNano())
-	return fmt.Sprintf("%02d-%07d", rand.Intn(98)+1, rand.Intn(9999998)+1)
+	return fmt.Sprintf("%02d-%07d", rand1+1, rand2+1)
 }

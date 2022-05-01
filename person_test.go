@@ -101,6 +101,7 @@ func TestFirstName(t *testing.T) {
 			t.Logf("\tTest %d:\tWhen creating a first name of any gender.", testID)
 			{
 				firstName := personFake.FirstName()
+
 				if len(firstName) == 0 {
 					t.Fatalf(tests.Failed("\t", "Test %d:\tShould have created a first name but empty string."), testID)
 				}

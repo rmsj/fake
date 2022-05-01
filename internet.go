@@ -1,11 +1,8 @@
 package fake
 
 import (
-	"math/rand"
 	"net"
 	"strings"
-
-	"github.com/rmsj/fake/internal/random"
 )
 
 // InternetProvider must be implemented by types that wants to provide data source
@@ -21,7 +18,7 @@ type InternetProvider interface {
 
 //Username returns a random username
 func (f Fake) Username() string {
-	userNameFormat := random.StringFromSlice(f.internet.UserNameFormats())
+	userNameFormat := f.randomFromSlice(f.internet.UserNameFormats())
 
 	var userName string
 	if strings.Contains(userNameFormat, "firstName") {
@@ -35,7 +32,7 @@ func (f Fake) Username() string {
 
 //Email returns a random email address
 func (f Fake) Email() string {
-	emailFormat := random.StringFromSlice(f.internet.EmailFormats())
+	emailFormat := f.randomFromSlice(f.internet.EmailFormats())
 
 	var email string
 	if strings.Contains(emailFormat, "userName") {
@@ -45,10 +42,10 @@ func (f Fake) Email() string {
 		email = strings.ReplaceAll(email, "{{domainName}}", f.DomainName())
 	}
 	if strings.Contains(email, "freeEmailDomain") {
-		email = strings.ReplaceAll(email, "{{freeEmailDomain}}", random.StringFromSlice(f.internet.FreeEmailDomains()))
+		email = strings.ReplaceAll(email, "{{freeEmailDomain}}", f.randomFromSlice(f.internet.FreeEmailDomains()))
 	}
 	if strings.Contains(email, "safeEmailDomain") {
-		email = strings.ReplaceAll(email, "{{safeEmailDomain}}", random.StringFromSlice(f.internet.SafeEmailDomains()))
+		email = strings.ReplaceAll(email, "{{safeEmailDomain}}", f.randomFromSlice(f.internet.SafeEmailDomains()))
 	}
 
 	return f.toAscii(strings.ToLower(f.toAscii(email)))
@@ -56,12 +53,12 @@ func (f Fake) Email() string {
 
 //SafeEmail returns a random email address from a safe domain
 func (f Fake) SafeEmail() string {
-	return f.toAscii(strings.ToLower(f.Username() + "@" + random.StringFromSlice(f.internet.SafeEmailDomains())))
+	return f.toAscii(strings.ToLower(f.Username() + "@" + f.randomFromSlice(f.internet.SafeEmailDomains())))
 }
 
 //FreeEmail returns a random free email address
 func (f Fake) FreeEmail() string {
-	return f.toAscii(strings.ToLower(f.Username() + "@" + random.StringFromSlice(f.internet.FreeEmailDomains())))
+	return f.toAscii(strings.ToLower(f.Username() + "@" + f.randomFromSlice(f.internet.FreeEmailDomains())))
 }
 
 //CompanyEmail returns a random "company" email address
@@ -76,14 +73,14 @@ func (f Fake) DomainName() string {
 
 // Url provides a random URL
 func (f Fake) Url() string {
-	urlFormat := random.StringFromSlice(f.internet.UrlFormats())
+	urlFormat := f.randomFromSlice(f.internet.UrlFormats())
 
 	var url string
 	if strings.Contains(urlFormat, "domainName") {
 		url = strings.ReplaceAll(urlFormat, "{{domainName}}", f.DomainName())
 	}
 	if strings.Contains(url, "slug") {
-		url = strings.ReplaceAll(url, "{{slug}}", f.slug(rand.Intn(3)))
+		url = strings.ReplaceAll(url, "{{slug}}", f.slug(f.randomInt(3)))
 	}
 
 	return f.toAscii(url)
@@ -94,7 +91,7 @@ func (f Fake) IPv4() string {
 	size := 4
 	ip := make([]byte, size)
 	for i := 0; i < size; i++ {
-		ip[i] = byte(rand.Intn(256))
+		ip[i] = byte(f.randomInt(256))
 	}
 	return net.IP(ip).To4().String()
 }
@@ -104,7 +101,7 @@ func (f Fake) IPv6() string {
 	size := 16
 	ip := make([]byte, size)
 	for i := 0; i < size; i++ {
-		ip[i] = byte(rand.Intn(256))
+		ip[i] = byte(f.randomInt(256))
 	}
 	return net.IP(ip).To16().String()
 }
@@ -113,16 +110,16 @@ func (f Fake) IPv6() string {
 func (f Fake) MacAddress() string {
 	ip := make([]byte, 6)
 	for i := 0; i < 6; i++ {
-		ip[i] = byte(rand.Intn(256))
+		ip[i] = byte(f.randomInt(256))
 	}
 	return net.HardwareAddr(ip).String()
 }
 
 func (f Fake) slug(size int) string {
-	slug := random.StringFromSlice(f.lorem.Words())
+	slug := f.randomFromSlice(f.lorem.Words())
 	if size > 1 {
 		for words := 0; words < size-1; words++ {
-			slug = strings.Join([]string{slug, random.StringFromSlice(f.lorem.Words())}, "-")
+			slug = strings.Join([]string{slug, f.randomFromSlice(f.lorem.Words())}, "-")
 		}
 	}
 
@@ -134,7 +131,7 @@ func (f Fake) domainWord() string {
 }
 
 func (f Fake) tld() string {
-	return random.StringFromSlice(f.internet.Tld())
+	return f.randomFromSlice(f.internet.Tld())
 }
 
 func (f Fake) toAscii(s string) string {
