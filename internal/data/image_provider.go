@@ -10,7 +10,7 @@ func NewImageProvider() ImageProvider {
 
 // ImgSource provides the URL for the images to be generated from
 func (ip ImageProvider) ImgSource() string {
-	return "http://lorempixel.com"
+	return "https://loremflickr.com"
 }
 
 // Categories list of valid categories to use for LoremPixel

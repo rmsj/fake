@@ -29,14 +29,14 @@ It's still early days in development so API might change.
 To upgrade, or downgrade the dependency, run go get:
 
 ```sh
-go get github.com/rmsj/fake@v0.0.3
+go get github.com/rmsj/fake@v0.0.4
 ```
 
 Using the appropriate version number you want.
 
 ## Basic Usage
 
-Fake API, as of version 0.0.2 has data generation capability  and `providers` for person, internet, text, lotem ipsum text and DNA sequences. 
+Fake API, as of version 0.0.4 has data generation capability  and `providers` for person, internet, text, lotem ipsum text and DNA sequences. 
 
 - PersonProvider
   - for first and last names, gender, etc.
@@ -50,6 +50,8 @@ Fake API, as of version 0.0.2 has data generation capability  and `providers` fo
   - for generation of random fake company data.
 - ImageProvider
   - uses [Lorem Pixel](http://lorempixel.com) to generate random images.
+- Lorem
+  - generates lorem ipsum texts.
 
 ```go
 package main
