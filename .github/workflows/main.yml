@@ -20,15 +20,7 @@ jobs:
         - name: Setup Go environment
           uses: actions/setup-go@v3.0.0
         - name: Generate coverage report
-            run: |
-              set -e
-              echo "" > coverage.txt
-              
-              go test ./... -race -coverprofile=profile.out -covermode=atomic
-              if [ -f profile.out ]; then
-              cat profile.out >> coverage.txt
-              rm profile.out
-              fi
+          run: ./codecov.sh
         - name: Codecov
           uses: codecov/codecov-action@v3.1.0
           with:
