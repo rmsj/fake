@@ -19,6 +19,8 @@ jobs:
         - uses: actions/checkout@main
         - name: Setup Go environment
           uses: actions/setup-go@v3.0.0
+          with:
+            go-version: '^1.18.1'
         - name: Generate coverage report
           run: ./codecov.sh
         - name: Codecov
