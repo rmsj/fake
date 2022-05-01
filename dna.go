@@ -3,8 +3,6 @@ package fake
 import (
 	"errors"
 	"strings"
-
-	"github.com/rmsj/fake/internal/random"
 )
 
 // DNAProvider must be implemented to provide different sets of data for DNA sequence generation
@@ -22,7 +20,7 @@ func (f Fake) DNASequence(len int) (string, error) {
 	var dna []string
 	charSet := f.dna.Set()
 	for i := 0; i < len; i++ {
-		dna = append(dna, random.StringFromSlice(charSet))
+		dna = append(dna, f.randomFromSlice(charSet))
 	}
 
 	return strings.Join(dna, ""), nil

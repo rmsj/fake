@@ -1,10 +1,7 @@
 package fake
 
 import (
-	"math/rand"
 	"strings"
-
-	"github.com/rmsj/fake/internal/random"
 )
 
 // LoremProvider must be implemented by types that wants to provide data source
@@ -15,7 +12,7 @@ type LoremProvider interface {
 
 //Word returns a random word
 func (f Fake) Word() string {
-	return random.StringFromSlice(f.lorem.Words())
+	return f.randomFromSlice(f.lorem.Words())
 }
 
 //Sentence returns a number of random words as a sentence
@@ -35,7 +32,7 @@ func (f Fake) Sentence(wordCount int) string {
 
 //Paragraph returns a random paragraph
 func (f Fake) Paragraph(sentenceCount int) string {
-	sentenceSize := rand.Intn(10) + 1
+	sentenceSize := f.randomInt(10) + 1
 	var result []string
 	for i := 0; i < sentenceCount; i++ {
 		result = append(result, f.Sentence(sentenceSize))

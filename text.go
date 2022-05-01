@@ -5,8 +5,6 @@ import (
 	"regexp"
 	"strings"
 	"unicode"
-
-	"github.com/rmsj/fake/internal/random"
 )
 
 // TextProvider must be implemented by types that wants to provide data source for texts
@@ -45,7 +43,7 @@ func (f Fake) RealText(maxWordCount int, prefixLen int) (string, error) {
 
 	var result []string
 	words := f.textChain[prefixLen]
-	next := random.StringFromSlice(f.textPrefixes[prefixLen])
+	next := f.randomFromSlice(f.textPrefixes[prefixLen])
 
 	for {
 
@@ -55,7 +53,7 @@ func (f Fake) RealText(maxWordCount int, prefixLen int) (string, error) {
 		}
 
 		// fetch a random word to append
-		word := random.StringFromSlice(wordsOnIndex)
+		word := f.randomFromSlice(wordsOnIndex)
 
 		// calculate next index
 		currentPrefix := strings.Fields(next)
