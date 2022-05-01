@@ -29,14 +29,14 @@ It's still early days in development so API might change.
 To upgrade, or downgrade the dependency, run go get:
 
 ```sh
-go get github.com/rmsj/fake@v0.0.3
+go get github.com/rmsj/fake@v0.0.5
 ```
 
 Using the appropriate version number you want.
 
 ## Basic Usage
 
-Fake API, as of version 0.0.2 has data generation capability  and `providers` for person, internet, text, lotem ipsum text and DNA sequences. 
+Fake API, as of version 0.0.5 has data generation capability  and `providers` for person, internet, text, lotem ipsum text and DNA sequences. 
 
 - PersonProvider
   - for first and last names, gender, etc.
@@ -49,7 +49,9 @@ Fake API, as of version 0.0.2 has data generation capability  and `providers` fo
 - CompanyProvider
   - for generation of random fake company data.
 - ImageProvider
-  - uses [Lorem Pixel](http://lorempixel.com) to generate random images.
+  - uses [Lorem Flickr](https://loremflickr.com) to generate random images.
+- Lorem
+  - generates lorem ipsum texts.
 
 ```go
 package main
@@ -120,6 +122,22 @@ func main() {
 		fmt.Println(u.firstName)
 		fmt.Println(u.email)
 	}
+	
+	// or for more predictable values, with deterministic mode
+    f.Determistix(42)
+
+    sameUsers := f.Factory(builder, 10)
+    for _, v := range sameUsers {
+      u, ok := v.(user)
+      if !ok {
+        panic("this should not happen")
+      }
+  
+      // all the generated users should have the same name and email
+      fmt.Println(u.firstName)
+      fmt.Println(u.email)
+    }
+	
 }
 ```
 
