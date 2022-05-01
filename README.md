@@ -3,7 +3,7 @@
 Fake is a Go package that generates fake data for you to help with development.
 It tris to give a simple API to access anywhere.
 
-[![codecov](https://codecov.io/gh/rmsj/fake/branch/main/graph/badge.svg)](https://codecov.io/gh/rmsj/fake)
+[![codecov](https://codecov.io/gh/rmsj/fake/branch/main/graph/badge.svg?token=W3IGROKH1R)](https://codecov.io/gh/rmsj/fake)
 [![Go Report Card](https://goreportcard.com/badge/github.com/rmsj/fake)](https://goreportcard.com/report/github.com/rmsj/fake)
 [![License](https://img.shields.io/github/license/mashape/apistatus.svg)](https://github.com/bxcodec/fake/blob/main/LICENSE)
 [![GoDoc](https://godoc.org/github.com/rmsj/fake?status.svg)](https://godoc.org/github.com/rmsj/fake)
