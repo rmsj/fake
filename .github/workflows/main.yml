@@ -20,7 +20,8 @@ jobs:
         - name: Setup Go environment
           uses: actions/setup-go@v3.0.0
         - name: Generate coverage report
-            run: ./codecov.sh
+            run: |
+              ./codecov.sh
         - name: Codecov
           uses: codecov/codecov-action@v3.1.0
           with:
