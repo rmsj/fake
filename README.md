@@ -124,7 +124,7 @@ func main() {
 	}
 	
 	// or for more predictable values, with deterministic mode
-    f.Determistix(42)
+    f.Deterministic(42)
 
     sameUsers := f.Factory(builder, 10)
     for _, v := range sameUsers {
@@ -179,13 +179,68 @@ func main() {
 	if err != nil {
 		panic(err)
 	}
+
+	pp := PortuguesePersonProvider{}
 	
-	f.SetPersonProvider(pt_provider)
+	f.ChangePersonProvider(pp)
 
 	// print random first name from your list of names
 	fmt.Println(f.FirstName())
 }
 ```
+
+### Image Providers
+
+Currently there is a implementation of Pexels and Loremflickr.
+The default provider is LoremFlickr which sources the images from loremflickr.com.
+To use Pexels as an image provider you will need to have your own API key from pexels.com.
+
+
+```go
+package pexels_provider
+
+import (
+	"fmt"
+	"github.com/rmsj/fake/integration/img/pexels"
+)
+
+type PexelsProvider struct {}
+
+
+func (ip PexelsProvider) ImgSource() img.Imager {
+	return pexels.New(os.GetEnv("PEXELS_API_KEY"))
+}
+
+// rest of implementation for all required methods on interface PexelsProvider...
+```
+
+```go
+package main
+
+import (
+	"fmt"
+	"github.com/rmsj/fake"
+
+	"github.com/user/project/pexels_provider"
+)
+
+func main() {
+
+	f, err := fake.New()
+	if err != nil {
+		panic(err)
+	}
+
+	imgProvider := PexelsProvider{}
+	
+	f.ChangeImageProvider(imgProvider)
+
+	// get random image
+	fmt.Println(f.Image(...))
+}
+```
+
+
 
 ## Work In Progress
 

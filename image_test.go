@@ -7,6 +7,7 @@ import (
 	"testing"
 
 	"github.com/rmsj/fake"
+	"github.com/rmsj/fake/integration/img"
 	"github.com/rmsj/fake/internal/data"
 	"github.com/rmsj/fake/tests"
 )
@@ -30,12 +31,12 @@ func TestImgUrl(t *testing.T) {
 
 	tt := []struct {
 		name string
-		img  fake.ImageSettings
+		img  img.ImageSearchSettings
 	}{
-		{"invalid category image", fake.ImageSettings{0, 0, "invalid"}},
-		{"100 x 100 image", fake.ImageSettings{100, 100, "cats"}},
-		{"200 x 200 image", fake.ImageSettings{200, 200, "people"}},
-		{"random size image", fake.ImageSettings{0, 0, "animals"}},
+		{"invalid category image", img.ImageSearchSettings{0, 0, "invalid", 1}},
+		{"100 x 100 image", img.ImageSearchSettings{100, 100, "cats", 1}},
+		{"200 x 200 image", img.ImageSearchSettings{200, 200, "people", 1}},
+		{"random size image", img.ImageSearchSettings{0, 0, "animals", 1}},
 	}
 
 	t.Log(tests.Given("Given the need to generate random image url"))
@@ -47,7 +48,7 @@ func TestImgUrl(t *testing.T) {
 				t.Logf("\tTest %d:\tWhen creating a %s.", testID, test.name)
 				{
 					imgUrl, err := imgFake.ImageUrl(test.img)
-					if err != nil && test.img.Category == "invalid" {
+					if err != nil && test.img.Word == "invalid" {
 						t.Logf(tests.Success("\t", "Test %d:\tShould not create image with invalid category for default image provider."), testID)
 						return
 					}
@@ -92,12 +93,12 @@ func TestImage(t *testing.T) {
 
 	tt := []struct {
 		name string
-		img  fake.ImageSettings
+		img  img.ImageSearchSettings
 	}{
-		{"invalid category image", fake.ImageSettings{0, 0, "invalid"}},
-		{"100 x 100 image", fake.ImageSettings{100, 100, "cats"}},
-		{"200 x 200 image", fake.ImageSettings{200, 200, "people"}},
-		{"random size image", fake.ImageSettings{0, 0, "animals"}},
+		{"invalid category image", img.ImageSearchSettings{0, 0, "invalid", 1}},
+		{"100 x 100 image", img.ImageSearchSettings{100, 100, "cats", 1}},
+		{"200 x 200 image", img.ImageSearchSettings{200, 200, "people", 1}},
+		{"random size image", img.ImageSearchSettings{0, 0, "animals", 1}},
 	}
 	t.Log(tests.Given("Given the need to generate random images"))
 	{
@@ -108,8 +109,8 @@ func TestImage(t *testing.T) {
 				t.Logf("\tTest %d:\tWhen creating a %s.", testID, test.name)
 				{
 					_, err := imgFake.ImageUrl(test.img)
-					if err != nil && test.img.Category == "invalid" {
-						t.Logf(tests.Success("\t", "Test %d:\tShould not create image with invalid category for default image provider."), testID)
+					if err != nil && test.img.Word == "invalid" {
+						t.Logf(tests.Failed("\t", "Test %d:\tShould not create image with invalid category for default image provider."), testID)
 						return
 					}
 					t.Logf(tests.Success("\t", "Test %d:\tShould be able to create a valid image."), testID)

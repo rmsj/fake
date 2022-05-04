@@ -55,7 +55,7 @@ func (f *Fake) Nondeterministic() {
 	f.deterministic = false
 }
 
-// Factory builds N number of
+// Factory builds N number of anything and fill it with random values
 func (f Fake) Factory(builder Builder, n int) []any {
 	var b []any
 
@@ -91,6 +91,11 @@ func (f Fake) ChangeDNAProvider(d DNAProvider) {
 	f.dna = d
 }
 
+// ChangeImageProvider changes the data and integration provider for image related fake data generation
+func (f Fake) ChangeImageProvider(i ImageProvider) {
+	f.image = i
+}
+
 var rd *rand.Rand
 
 // randomFromSlice returns a random element from the given slice of string
@@ -107,6 +112,10 @@ func (f Fake) randomFromSlice(s []string) string {
 
 // randomFromSlice returns a random element from the given slice of string
 func (f Fake) randomInt(interval int) int {
+
+	if interval <= 0 {
+		return 0
+	}
 
 	//default, random generation
 	if !f.deterministic {

@@ -41,7 +41,7 @@ func TestFactory(t *testing.T) {
 		{"Loads of Values", 200},
 	}
 
-	t.Log("Given the need to create a variable number of value of a type with the Factory function")
+	t.Log(tests.Given("Given the need to create a variable number of value of a type with the Factory function"))
 	{
 		for testID, test := range tt {
 			// start with test 1
@@ -87,7 +87,7 @@ func TestFactory(t *testing.T) {
 		}
 	}
 
-	t.Log("Given the need to create to create same values given same input, on deterministic mode")
+	t.Log(tests.Given("Given the need to create to create same values given same input, on deterministic mode"))
 	{
 		// all generated values should be the same
 		f.Deterministic(42)

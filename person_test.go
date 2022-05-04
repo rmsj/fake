@@ -26,7 +26,7 @@ func TestTitle(t *testing.T) {
 	setupPersonTest()
 
 	validTitles := append(personProvider.TitlesMale(), personProvider.TitlesFemale()...)
-	t.Log("Given the need to test creating person title")
+	t.Log(tests.Given("Given the need to test creating person title"))
 	{
 		for testID := 1; testID < 5; testID++ {
 			t.Logf("\tTest %d:\tWhen creating a Title of any gender.", testID)
@@ -49,7 +49,7 @@ func TestTitleFemale(t *testing.T) {
 	setupPersonTest()
 
 	validTitles := personProvider.TitlesFemale()
-	t.Log("Given the need to test creating person title")
+	t.Log(tests.Given("Given the need to test creating person title"))
 	{
 		for testID := 1; testID < 5; testID++ {
 			t.Logf("\tTest %d:\tWhen creating a Female Title.", testID)
@@ -72,7 +72,7 @@ func TestTitleMale(t *testing.T) {
 	setupPersonTest()
 
 	validTitles := personProvider.TitlesMale()
-	t.Log("Given the need to test creating person title")
+	t.Log(tests.Given("Given the need to test creating person title"))
 	{
 		for testID := 1; testID < 5; testID++ {
 			t.Logf("\tTest %d:\tWhen creating a Male Title.", testID)
@@ -95,7 +95,7 @@ func TestFirstName(t *testing.T) {
 	setupPersonTest()
 
 	validNames := personProvider.FirstNames()
-	t.Log("Given the need to test creating person first name")
+	t.Log(tests.Given("Given the need to test creating person first name"))
 	{
 		for testID := 1; testID < 5; testID++ {
 			t.Logf("\tTest %d:\tWhen creating a first name of any gender.", testID)
@@ -119,7 +119,7 @@ func TestFirstNameFemale(t *testing.T) {
 	setupPersonTest()
 
 	validNames := personProvider.FirstNamesFemale()
-	t.Log("Given the need to test creating female person first name")
+	t.Log(tests.Given("Given the need to test creating female person first name"))
 	{
 		for testID := 1; testID < 5; testID++ {
 			t.Logf("\tTest %d:\tWhen creating a first name of female gender.", testID)
@@ -142,7 +142,7 @@ func TestFirstNameMale(t *testing.T) {
 	setupPersonTest()
 
 	validNames := personProvider.FirstNamesMale()
-	t.Log("Given the need to test creating male person first name")
+	t.Log(tests.Given("Given the need to test creating male person first name"))
 	{
 		for testID := 1; testID < 5; testID++ {
 			t.Logf("\tTest %d:\tWhen creating a first name of male gender.", testID)
@@ -165,7 +165,7 @@ func TestLastName(t *testing.T) {
 	setupPersonTest()
 
 	validNames := personProvider.LastNames()
-	t.Log("Given the need to test creating a person last name")
+	t.Log(tests.Given("Given the need to test creating a person last name"))
 	{
 		for testID := 1; testID < 5; testID++ {
 			t.Logf("\tTest %d:\tWhen creating a last name.", testID)
@@ -187,7 +187,7 @@ func TestLastName(t *testing.T) {
 func TestName(t *testing.T) {
 	setupPersonTest()
 
-	t.Log("Given the need to test creating a person name")
+	t.Log(tests.Given("Given the need to test creating a person name"))
 	{
 		for testID := 1; testID < 5; testID++ {
 			t.Logf("\tTest %d:\tWhen creating a person name.", testID)
@@ -210,7 +210,7 @@ func TestGender(t *testing.T) {
 	setupPersonTest()
 
 	validGenders := personProvider.Genders()
-	t.Log("Given the need to test creating person gender")
+	t.Log(tests.Given("Given the need to test creating person gender"))
 	{
 		for testID := 1; testID < 5; testID++ {
 			t.Logf("\tTest %d:\tWhen creating a person gender.", testID)
@@ -233,7 +233,7 @@ func TestSuffix(t *testing.T) {
 	setupPersonTest()
 
 	validSuffixes := personProvider.Suffixes()
-	t.Log("Given the need to test creating person name suffix")
+	t.Log(tests.Given("Given the need to test creating person name suffix"))
 	{
 		for testID := 1; testID < 5; testID++ {
 			t.Logf("\tTest %d:\tWhen creating a person name suffix.", testID)

@@ -26,7 +26,7 @@ func TestRealText(t *testing.T) {
 		{"Long text", 20000, 2},
 	}
 
-	t.Log("Given the need to create generate fake 'real text'")
+	t.Log(tests.Given("Given the need to create generate fake 'real text'"))
 	{
 		for testID, test := range tt {
 			// start with test 1
